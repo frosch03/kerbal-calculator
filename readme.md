@@ -10,9 +10,7 @@ listed in the following list.
 ## Time of Hohmann transfer \(t_h\)
 
 The time (in seconds) of the transfer is calculated by 
-\[
-   t_h = \pi * \sqrt{\frac{(r_1 + r_2 + 2R)^3}{8*\mu}}
-   \]
+![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%20%20t_h%20%3D%20%5Cpi%20%2A%20%5Csqrt%7B%5Cfrac%7B%28r_1%20%2B%20r_2%20%2B%202R%29%5E3%7D%7B8%2A%5Cmu%7D%7D%0A%20%20%20%5C%5D)
 Which is done by:
 
     def t_h(self, _target):
@@ -21,9 +19,7 @@ Which is done by:
 ## The semi major axis of Hohmann transer Orbit \(a_{hohmann}\)
 
 The semi major axis of the transfer is calculated via:
-\[
-   a_{hohmann} = \frac{1}{2} * (2R + r_1 + r_2)
-   \]
+![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%20%20a_%7Bhohmann%7D%20%3D%20%5Cfrac%7B1%7D%7B2%7D%20%2A%20%282R%20%2B%20r_1%20%2B%20r_2%29%0A%20%20%20%5C%5D)
 Which is done by:
 
     def a_h(self, _target):
@@ -32,9 +28,7 @@ Which is done by:
 ## The Energy of Hohmann transer \(E_{hohmann}\)
 
 The Energy of the transfer is calculated by:
-\[
-   E_{hohmann} = - \frac{\mu}{2*a}
-   \]
+![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%20%20E_%7Bhohmann%7D%20%3D%20-%20%5Cfrac%7B%5Cmu%7D%7B2%2Aa%7D%0A%20%20%20%5C%5D)
 Which is done by:
 
     def E_h(self, _target):
@@ -43,9 +37,7 @@ Which is done by:
 ## The Velocity needed at the Priapsis of the Hohmann transer \(v_{\pi,hohmann}\)
 
 Is calculated by:
-\[
-   v_{\pi,hohmann} = \sqrt{\mu * (\frac{2}{r_1}) - (\frac{2}{r_1+r_2})}
-   \]
+![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%20%20v_%7B%5Cpi%2Chohmann%7D%20%3D%20%5Csqrt%7B%5Cmu%20%2A%20%28%5Cfrac%7B2%7D%7Br_1%7D%29%20-%20%28%5Cfrac%7B2%7D%7Br_1%2Br_2%7D%29%7D%0A%20%20%20%5C%5D)
 Which is done by:
 
     def v_p_h(self, _target):
@@ -57,9 +49,7 @@ Which is done by:
 ## The Velocity needed at the Apoapsis of the Hohmann transer \(v_{\alpha,hohmann}\)
 
 Is calculated by:
-\[
-   v_{\alpha,hohmann} = \sqrt{\mu * (\frac{2}{r_2}) - (\frac{2}{r_1+r_2})}
-   \]
+![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%20%20v_%7B%5Calpha%2Chohmann%7D%20%3D%20%5Csqrt%7B%5Cmu%20%2A%20%28%5Cfrac%7B2%7D%7Br_2%7D%29%20-%20%28%5Cfrac%7B2%7D%7Br_1%2Br_2%7D%29%7D%0A%20%20%20%5C%5D)
 Which is done by:
 
     def v_a_h(self, _target):
@@ -71,9 +61,7 @@ Which is done by:
 ## The initial Velocity before the Hohmann transer \(v_{c1}\)
 
 Is calculated by:
-\[
-   v_{c1} = \sqrt{\frac{\mu}{r_1}}
-   \]
+![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%20%20v_%7Bc1%7D%20%3D%20%5Csqrt%7B%5Cfrac%7B%5Cmu%7D%7Br_1%7D%7D%0A%20%20%20%5C%5D)
 Which is done by:
 
     def v_c_1(self, _target):
@@ -84,9 +72,7 @@ Which is done by:
 ## The final Velocity after the Hohmann transer \(v_{c2}\)
 
 Is calculated by:
-\[
-   v_{c2} = \sqrt{\frac{\mu}{r_2}}
-   \]
+![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%20%20v_%7Bc2%7D%20%3D%20%5Csqrt%7B%5Cfrac%7B%5Cmu%7D%7Br_2%7D%7D%0A%20%20%20%5C%5D)
 Which is done by:
 
     def v_c_2(self, _target):
@@ -97,9 +83,7 @@ Which is done by:
 ## The difference in Velocity at Periapsis of Hohmann transer \(\Delta v_{\pi,hohmann}\)
 
 Is calculated by:
-\[
-   \Delta v_{\pi,hohmann} = v_{\pi,hohmann} - v_{c1}
-   \]
+![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%20%20%5CDelta%20v_%7B%5Cpi%2Chohmann%7D%20%3D%20v_%7B%5Cpi%2Chohmann%7D%20-%20v_%7Bc1%7D%0A%20%20%20%5C%5D)
 Which is done by:
 
     def delta_vph(self, _target):
@@ -108,9 +92,7 @@ Which is done by:
 ## The difference in Velocity at Apoapsis of Hohmann transer \(\Delta v_{\alpha,hohmann}\)
 
 Is calculated by:
-\[
-   \Delta v_{\alpha,hohmann} = v_{c2} - v_{\alpha,hohmann}
-   \]
+![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%20%20%5CDelta%20v_%7B%5Calpha%2Chohmann%7D%20%3D%20v_%7Bc2%7D%20-%20v_%7B%5Calpha%2Chohmann%7D%0A%20%20%20%5C%5D)
 Which is done by:
 
     def delta_vah(self, _target):
@@ -119,9 +101,7 @@ Which is done by:
 ## The total difference in Velocity of the Hohmann transer \(\Delta v_{T,hohmann}\)
 
 Is calculated by:
-\[
-   \Delta v_{T,hohmann} = \Delta v_{\pi,hohmann} + \Delta v_{\alpha,hohmann}
-   \]
+![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%20%20%5CDelta%20v_%7BT%2Chohmann%7D%20%3D%20%5CDelta%20v_%7B%5Cpi%2Chohmann%7D%20%2B%20%5CDelta%20v_%7B%5Calpha%2Chohmann%7D%0A%20%20%20%5C%5D)
 Which is done by:
 
     def delta_vth(self, _target):
@@ -130,9 +110,7 @@ Which is done by:
 ## The specific angular Momentum of Hohmann transer \(h_{hohmann}\)
 
 Is calculated by:
-\[
-   h_{hohmann} = r_1 * v_{\pi,hohmann}
-   \]
+![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%20%20h_%7Bhohmann%7D%20%3D%20r_1%20%2A%20v_%7B%5Cpi%2Chohmann%7D%0A%20%20%20%5C%5D)
 Which is done by:
 
     def h_h(self, _target):
@@ -143,16 +121,12 @@ Which is done by:
 ## The Eccentricity of the Hohmann transer Elipsis \\(e\_)hohmann}\\]
 
 Is calculated by:
-\[
-   e_{hohmann} = \sqrt{1 + \frac{2 * E_{hohmann} * h_{hohmann}^2}{\mu^2}}
-   \]
+![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%20%20e_%7Bhohmann%7D%20%3D%20%5Csqrt%7B1%20%2B%20%5Cfrac%7B2%20%2A%20E_%7Bhohmann%7D%20%2A%20h_%7Bhohmann%7D%5E2%7D%7B%5Cmu%5E2%7D%7D%0A%20%20%20%5C%5D)
 Which is done by:
 
     def ecc_h(self, _target):
         return ( sqrt(1 + ((2 * self.E_h(_target) * (self.h_h(_target) ** 2)) / (self.planet.mue ** 2))) )
 
-# \[\my\] Formula
+# ![equation](http://latex.codecogs.com/gif.latex?%5C%5B%5Cmy%5C%5D) Formula
 
-\[
-  6.673*10^{-11} [N* (\frac{m}{kg})^2] * 5.92719*10^{24} [kg]
-  \]
+![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%206.673%2A10%5E%7B-11%7D%20%5BN%2A%20%28%5Cfrac%7Bm%7D%7Bkg%7D%29%5E2%5D%20%2A%205.92719%2A10%5E%7B24%7D%20%5Bkg%5D%0A%20%20%5C%5D)
