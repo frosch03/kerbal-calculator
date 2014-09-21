@@ -151,6 +151,6 @@ Which is done by:
     def ecc_h(self, _target):
         return ( sqrt(1 + ((2 * self.E_h(_target) * (self.h_h(_target) ** 2)) / (self.planet.mue ** 2))) )
 
-# ![equation](http://latex.codecogs.com/gif.latex?%5C%5B%5Cmy%5C%5D) Formula
+# ![equation](http://latex.codecogs.com/gif.latex?%5C%5B%5Cmu%5C%5D) Formula
 
 ![equation](http://latex.codecogs.com/gif.latex?%5C%5B%0A%20%206.673%2A10%5E%7B-11%7D%20%5BN%2A%20%28%5Cfrac%7Bm%7D%7Bkg%7D%29%5E2%5D%20%2A%205.92719%2A10%5E%7B24%7D%20%5Bkg%5D%0A%20%20%5C%5D)
