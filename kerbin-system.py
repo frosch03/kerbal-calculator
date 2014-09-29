@@ -47,16 +47,3 @@ Kerbol.addSatelit(Eeloo,  Orbit(Kerbol,  113549713200, 66687926800, inclination 
 
 LKO = Orbit(Kerbin, 80e3, 80e3)
 KSO = Orbit(Kerbin, 2.868e6, 2.868e6)
-
-
-
-Ship = Craft("Ship")
-Station = Craft("Station")
-Kerbin.addSatelit(Ship, Orbit(Kerbin, 80e3, 80e3))
-Kerbin.addSatelit(Station, Orbit(Kerbin, 80e3, 80e3))
-
-
-lko     = Orbit(Kerbin, 80e3, 80e3)
-mun_o   = Orbit(Kerbin, 12e6, 12e6)
-hohmann = [Maneuver(lko, lko.delta_vph(mun_o), 0, (0,0,0)),
-           Maneuver(lko, lko.delta_vah(mun_o), 180, (0,0,0))]
