@@ -8,6 +8,9 @@ class Body(object):
     def __init__(self, _name):
         self.name = _name
 
+    def __str__(self):
+        return (self.name)
+
 class Craft(Body):
     def __init__(self, _name, delta_v = None):
         super(Craft, self).__init__(_name)
@@ -27,6 +30,23 @@ class CelestialBody(Body):
         if system:
             self.system = system
             
+    def __str__(self):
+        sysStr = ""
+        sysStr = self.name + "\n" +\
+                 "+ r:" + str(self.radius) + "m\n" +\
+                 "+ m:" + str(self.mass) + "kg\n" +\
+                 "+ System:" + "\n"
+        for orb in self.system:
+            sysStr += "  - " + str(orb) + "\n"
+            anoStr  = ""
+            for anomaly in self.system[orb]:
+                anoStr += "    * Anomaly: " + str(anomaly) + "°\n      - "
+                for i,body in enumerate(self.system[orb][anomaly]):
+                    anoStr += body.name + "\n      - " 
+                anoStr = anoStr[:-8]
+            sysStr += anoStr
+        return (sysStr[:-1])
+
     def __setattr__(self, name, value):
         if name == 'mass':
             self.__dict__['mass'] = value
@@ -37,20 +57,24 @@ class CelestialBody(Body):
             except:
                 raise (AttributeError, ("no such attribute: %s"%name))
         
-    def addSatelit(self, _body, _orbit):
+    def addSatelit(self, _body, _orbit, anomaly = 0):
         try: 
-            self.system[_orbit][_body.name] = _body
+            self.system[str(_orbit)][anomaly].append(_body)
         except:
-            self.system[_orbit] = {}
-            self.system[_orbit][_body.name] = _body
+            try:
+                self.system[str(_orbit)][anomaly] = [_body]
+            except:
+                self.system[str(_orbit)] = {}
+                self.system[str(_orbit)][anomaly] = [_body]
 
     def delSatelit(self, _orbit, body = None):
-        if not body and len(self.system[_orbit]) > 1:
+        if not body and len(self.system[str(_orbit)]) > 1:
             raise ValueError ("multiple body's on orbit: %s"%str(_orbit))
         if body:
-            del(self.system[_orbit][_body.name])
+            ano_to_del = list(self.system[str(_orbit)].keys())[list(self.system[str(_orbit)].values()).index(body)]
+            del(self.system[str(_orbit)][ano_to_del])
         else:
-            del(self.system[_orbit])
+            del(self.system[str(_orbit)])
 
 class Moon(CelestialBody):
     def __init__(self, _name, _r, _soi, _mass):
@@ -88,12 +112,22 @@ class Orbit(object):
         self.e = abs(1 - (2 / \
                           (((self.planet.radius + self.apoapsis) / \
                             (self.planet.radius + self.periapsis)) + 1) ))
-        if inclination:
-            self.i = inclination
-        if Omega:
-            self.O = Omega
-        if omega:
-            self.o = omega
+        self.i = inclination
+        self.O = Omega
+        self.o = omega
+
+    def __str__(self):
+        orbStr = ""
+        orbStr = "Apo: " + str(self.apoapsis) + ", Peri " + str(self.periapsis)+ \
+                 ((", Inclination: " + str(self.i) + "°") if self.i else "") +\
+                 ((", Long of Asc: " + str(self.O) + "°") if self.O else "") +\
+                 ((", Arg of Peri: " + str(self.o) + "°") if self.o else "")
+
+        
+        return (orbStr)
+
+    def T(self):
+        return (2 * pi * sqrt(self.a**3 / self.planet.mue))
 
     def t_h(self, _target):
         return ( pi * sqrt((_target.periapsis + self.apoapsis + (2 * self.planet.radius))**3 / (8 * self.planet.mue)) )
@@ -142,4 +176,11 @@ class Orbit(object):
 
     def ecc_h(self, _target):
         return ( sqrt(1 + ((2 * self.E_h(_target) * (self.h_h(_target) ** 2)) / (self.planet.mue ** 2))) )
+
+class Maneuver(object):
+    def __init__(self, _orbit, _delta_v, _anomaly, _direction):
+        self.orbit     = _orbit,
+        self.delta_v   = _delta_v
+        self.anomaly   = _anomaly
+        self.direction = _direction
 
