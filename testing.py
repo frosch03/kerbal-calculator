@@ -1,5 +1,4 @@
-tmp = __import__('kerbin-system')
-globals().update(vars(tmp))
+from kerbinsystem import * 
 
 
 Ship = Craft("Ship")
@@ -22,3 +21,5 @@ def eject_angle(_orbit, _anomaly, _trgOrbit, _trgAnomaly):
 
 kerbin_orb = Orbit(Kerbin, 13599840256, 13599840256)
 duna_orb = Orbit(Duna, 21783189163, 19669121365, inclination = 0.06, Omega = 135.5)
+
+# p_t = 1/2 * ((h1 + h2 + 2*r) / 2*r + 2*h2)**1.5

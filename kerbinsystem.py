@@ -1,6 +1,6 @@
 from kerbal import *
 
-Kerbol = Star('Kerbol', 261.6e6, float('Inf'), 1.7565670e28)
+Kerbol =   Star('Kerbol', 261.6e6, float('Inf'), 1.7565670e28)
 
 Moho   = Planet('Moho', 250e3, 9646663, 2.5263617e21)
 
@@ -34,13 +34,13 @@ Jool.addSatelit(Pol,    Orbit(Jool, 210.624206e6 -6e6, 149.155794e6 -6e6, inclin
 
 Eeloo  = Planet('Eeloo', 210e3, 1.1908294e8, 1.1149358e21)
 
-Kerbol.addSatelit(Moho,   Orbit(Kerbol,  6315765980-261.6e6,   4210510628-261.6e6, inclination = 7, Omega = 70, omega = 15))
-Kerbol.addSatelit(Eve,    Orbit(Kerbol,  9931011387-261.6e6,   9734357701-261.6e6, inclination = 2.1, Omega = 15))
-Kerbol.addSatelit(Kerbin, Orbit(Kerbol,  13599840256-261.6e6,  13599840256-261.6e6))
-Kerbol.addSatelit(Duna,   Orbit(Kerbol,  21783189163-261.6e6,  19669121365-261.6e6, inclination = 0.06,  Omega = 135.5))
-Kerbol.addSatelit(Dres,   Orbit(Kerbol,  46761053522-261.6e6,  34917642884-261.6e6, inclination = 5,     Omega = 280, omega = 90))
-Kerbol.addSatelit(Jool,   Orbit(Kerbol,  72212238387-261.6e6,  65334882253-261.6e6, inclination = 1.302, Omega = 52))
-Kerbol.addSatelit(Eeloo,  Orbit(Kerbol,  113549713200-261.6e6, 66687926800-261.6e6, inclination = 6.15,  Omega = 50, omega = 260))
+Kerbol.addSatelit(Moho,   Orbit(Kerbol,    6315765980 -261.6e6,  4210510628 -261.6e6, inclination = 7,     Omega =  70, omega =  15))
+Kerbol.addSatelit(Eve,    Orbit(Kerbol,    9931011387 -261.6e6,  9734357701 -261.6e6, inclination = 2.1,   Omega =  15))
+Kerbol.addSatelit(Kerbin, Orbit(Kerbol,   13599840256 -261.6e6, 13599840256 -261.6e6))
+Kerbol.addSatelit(Duna,   Orbit(Kerbol,   21783189163 -261.6e6, 19669121365 -261.6e6, inclination = 0.06,  Omega = 135.5))
+Kerbol.addSatelit(Dres,   Orbit(Kerbol,   46761053522 -261.6e6, 34917642884 -261.6e6, inclination = 5,     Omega = 280, omega =  90))
+Kerbol.addSatelit(Jool,   Orbit(Kerbol,   72212238387 -261.6e6, 65334882253 -261.6e6, inclination = 1.302, Omega =  52))
+Kerbol.addSatelit(Eeloo,  Orbit(Kerbol,  113549713200 -261.6e6, 66687926800 -261.6e6, inclination = 6.15,  Omega =  50, omega = 260))
 
 
 

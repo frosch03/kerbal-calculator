@@ -2,7 +2,8 @@ from math import pi, sqrt
 # from pygraph.classes.graph import graph
 
 # Gravitation Constant: [N*(m/kg)^2]
-G = 6.673*(10**-11)
+G = 6.674e-11 # Si-Value: 6.67384e-11
+
 
 class Body(object):
     def __init__(self, _name):
@@ -22,6 +23,7 @@ class CelestialBody(Body):
         super(CelestialBody, self).__init__(_name)
         self.radius = _r
         self.system = {}
+        self.bodysNorbits = []
         self.mass = _mass
         # Std. Grav. Parameter: [m^3 / s^2]
         self.mue = G * self.mass 
@@ -56,19 +58,40 @@ class CelestialBody(Body):
                 self.__dict__[name] = value
             except:
                 raise (AttributeError, ("no such attribute: %s"%name))
+
+    def getOrbitOf(self, _body):
+        return(self.bodysNorbits[([b for ((b,o,a)) in self.bodysNorbits].index(_body))][1])
         
     def addSatelit(self, _body, _orbit, anomaly = 0):
         try: 
-            self.system[str(_orbit)][anomaly].append(_body)
+            self.system[_orbit][anomaly].append(_body)
+            self.bodysNorbits.append((_body, _orbit, anomaly))
+            if _body.system:
+                for subOrbit in _body.system:
+                    for subAnomaly in _body.system[subOrbit]:
+                        for subBody in _body.system[subOrbit][subAnomaly]:
+                            self.bodysNorbits.append((subBody, subOrbit, subAnomaly))
         except:
             try:
-                self.system[str(_orbit)][anomaly] = [_body]
+                self.system[_orbit][anomaly] = [_body]
+                self.bodysNorbits.append((_body, _orbit, anomaly))
+                if _body.system:
+                    for subOrbit in _body.system:
+                        for subAnomaly in _body.system[subOrbit]:
+                            for subBody in _body.system[subOrbit][subAnomaly]:
+                                self.bodysNorbits.append((subBody, subOrbit, subAnomaly))
             except:
-                self.system[str(_orbit)] = {}
-                self.system[str(_orbit)][anomaly] = [_body]
+                self.system[_orbit] = {}
+                self.system[_orbit][anomaly] = [_body]
+                self.bodysNorbits.append((_body, _orbit, anomaly))
+                if _body.system:
+                    for subOrbit in _body.system:
+                        for subAnomaly in _body.system[subOrbit]:
+                            for subBody in _body.system[subOrbit][subAnomaly]:
+                                self.bodysNorbits.append((subBody, subOrbit, subAnomaly))
 
     def delSatelit(self, _orbit, body = None):
-        if not body and len(self.system[str(_orbit)]) > 1:
+        if not body and len(self.system[_orbit]) > 1:
             raise ValueError ("multiple body's on orbit: %s"%str(_orbit))
         if body:
             ano_to_del = list(self.system[str(_orbit)].keys())[list(self.system[str(_orbit)].values()).index(body)]
@@ -107,7 +130,7 @@ class Orbit(object):
         self.planet    = _planet
         self.periapsis = (_r1 if _r1 < _r2 else _r2)
         self.apoapsis  = (_r1 if _r1 > _r2 else _r2)
-        self.a = self.periapsis + self.apoapsis + (2 * self.planet.radius)
+        self.a = (self.periapsis + self.apoapsis + (2 * self.planet.radius)) / 2
         self.T = 2 * pi * sqrt((self.a ** 3)/self.planet.mue)
         self.e = abs(1 - (2 / \
                           (((self.planet.radius + self.apoapsis) / \
@@ -167,7 +190,7 @@ class Orbit(object):
         return ( self.v_c_2(_target) - self.v_a_h(_target) )
         
     def delta_vth(self, _target):
-        return ( self.delta_vph(_target) + self.delta_vah(_target) )
+        return (round(( self.delta_vph(_target) + self.delta_vah(_target) ), 2))
 
     def h_h(self, _target):
         # r_1: inner circle radi
@@ -177,10 +200,16 @@ class Orbit(object):
     def ecc_h(self, _target):
         return ( sqrt(1 + ((2 * self.E_h(_target) * (self.h_h(_target) ** 2)) / (self.planet.mue ** 2))) )
 
-class Maneuver(object):
-    def __init__(self, _orbit, _delta_v, _anomaly, _direction):
-        self.orbit     = _orbit,
-        self.delta_v   = _delta_v
-        self.anomaly   = _anomaly
-        self.direction = _direction
+    def p_t(self, _target):
+        # h_1: inner circle height / h_2: outer circle height
+        h_1 = self.periapsis if self.periapsis < _target.periapsis else _target.periapsis
+        h_2 = _target.periapsis if _target.periapsis > self.periapsis else self.periapsis
+        return (0.5 * ((h_1 + h_2 + 2 * self.planet.radius) / (2 * self.planet.radius + 2 * h_2)) ** 1.5)
+        # p_t = 1/2 * ((h1 + h2 + 2*r) / 2*r + 2*h2)**1.5
+
+    def phase_angle_h(self, _target):
+        p_t = self.p_t(_target)
+        f_t = p_t - 1 if p_t > 1 else p_t
+        phi = 360 * f_t
+        return (round((180 - phi), 2))
 

@@ -37,7 +37,7 @@ class From(object):
         s_omega = self.sOrbit.o if self.sOrbit.o else 0 
         if self.sOrbit.i:
             maneuver = "** At: %6.2f ChgIncl: %6.2f"%((360 - s_omega),
-                                               -self.sOrbit.i)
+                                                      -self.sOrbit.i)
             return (maneuver)
         else:
             return("** In Reference Plane")
@@ -45,11 +45,39 @@ class From(object):
     def toTgtPlane(self):
         if self.tOrbit.O:
             maneuver = "** At: %6.2f ChgIncl: %6.2f"%((self.tOrbit.O),
-                                               self.tOrbit.i)
+                                                      self.tOrbit.i)
             return (maneuver)
 
+    def ejectAngleRange(self):
+        s_minHeight  = min(self.sOrbit.apoapsis, self.sOrbit.periapsis)
+        s_maxHeight  = max(self.sOrbit.apoapsis, self.sOrbit.periapsis)
+        t_minHeight  = min(self.tOrbit.apoapsis, self.tOrbit.periapsis)
+        t_maxHeight  = max(self.tOrbit.apoapsis, self.tOrbit.periapsis)
+        s_circMaxOrb = Orbit(self.sOrbit.planet, s_maxHeight, s_maxHeight)
+        s_circMinOrb = Orbit(self.sOrbit.planet, s_minHeight, s_minHeight)
+        t_circMaxOrb = Orbit(self.sOrbit.planet, t_maxHeight, t_maxHeight)
+        t_circMinOrb = Orbit(self.sOrbit.planet, t_minHeight, t_minHeight)
+
+        if   s_maxHeight < t_minHeight:
+            minAngle = s_circMaxOrb.phase_angle_h(t_circMinOrb)
+            maxAngle = s_circMinOrb.phase_angle_h(t_circMaxOrb)
+            minDV    = s_circMaxOrb.delta_vth(t_circMinOrb)
+            maxDV    = s_circMinOrb.delta_vth(t_circMaxOrb)
+        elif s_minHeight > t_maxHeight:
+            minAngle = s_circMinOrb.phase_angle_h(t_circMaxOrb)
+            maxAngle = s_circMaxOrb.phase_angle_h(t_circMinOrb)
+            minDV    = s_circMinOrb.delta_vth(t_circMaxOrb)
+            maxDV    = s_circMaxOrb.delta_vth(t_circMinOrb)
+        else:
+            raise(ValueError, "Elipsis are entangled")
+        return(((minAngle, minDV), (maxAngle, maxDV)))
+
+    def synodicT(self):
+        innerOrbitT = self.sOrbit.T if self.sOrbit.T < self.tOrbit.T else self.tOrbit.T
+        outerOrbitT = self.tOrbit.T if self.tOrbit.T > self.sOrbit.T else self.sOrbit.T
+        return(1/((1/innerOrbitT) - (1/outerOrbitT)))
         
-        
+
 
 class kFrom(From):
     def __init__(self, _body):
